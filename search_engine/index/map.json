@@ -1,0 +1,69 @@
+
+{
+  "mappings": {
+    "properties": {
+      "Song Name": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Singer": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Album": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Year": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Featured Artists": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Metaphor": {
+        "type": "text",
+        "analyzer": "my_analyzer"
+      },
+      "interpretation": {
+        "type": "text",
+        "analyzer": "my_analyzer"
+      },
+      "Lyrics": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}
