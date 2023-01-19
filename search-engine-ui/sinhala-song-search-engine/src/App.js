@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField } from '@mui/material';
 import LeftPanel from './leftPanel';
 import SongCard from './songCard';
+import SearchIcon from '@mui/icons-material/Search';
 
 const App = () => {
   const [query,setQuery] = useState('')
@@ -14,7 +15,8 @@ const App = () => {
   const [matchAll, setmatchAll] = useState(true);
   const [singer, setsinger] = useState(true);
   const [songName, setsongName] = useState(true);
-  const [year, setyear] = useState(true);
+  const [sourceDomain, setsourceDomain] = useState(true);
+  const [targetDomain, settargetDomain] = useState(true);
   const [album, setalbum] = useState(true);
   const [lyrics, setlyrics] = useState(true);
   const [metaphor, setmetaphor] = useState(true);
@@ -24,6 +26,7 @@ const App = () => {
   const [isFiltersLoaded, setIsFiltersLoaded] = useState(false);
   const [filterChecked, setFiltersChecked] = useState([]);
   const [filtersSet,setFiltersSet]= useState(false)
+  const [allDataLoaded,setAllDataLoaded]= useState(false)
 
   function changeFilterChecked (filtersArray){
     var newFilterArray = []
@@ -75,20 +78,23 @@ const App = () => {
       setmatchAll(false)
       setsinger(false)
       setsongName(false)
-      setyear(false)
+      setsourceDomain(false)
       setalbum(false)
       setlyrics(false)
       setmetaphor(false)
+      settargetDomain(false)
+
     }
     else{
       setDisableMatchingFields(true)
       setmatchAll(true)
       setsinger(true)
       setsongName(true)
-      setyear(true)
+      setsourceDomain(true)
       setalbum(true)
       setlyrics(true)
       setmetaphor(true)
+      settargetDomain(true)
     }
   }
 
@@ -100,8 +106,8 @@ const App = () => {
     if(songName){
       mResults.push('Song Name')
     }
-    if(year){
-      mResults.push('year')
+    if(sourceDomain){
+      mResults.push('source domain')
     }
     if(album){
       mResults.push('Album')
@@ -111,6 +117,9 @@ const App = () => {
     }
     if(metaphor){
       mResults.push('Metaphor')
+    }
+    if(targetDomain){
+      mResults.push('target domain')
     }
     return mResults
   }
@@ -142,17 +151,13 @@ const App = () => {
     axios
       .request(results)
       .then((response) => {
-
-        
         const keys = Object.keys(response.data)
-        
         const newArrayF = []
         for(var c=0;c<keys.length;c++){
           var newObj = {}
           newObj[keys[c].slice(0,keys[c].length-8)] = response.data[keys[c]]
           newArrayF.push(newObj)
         }
-        
         setfilters(newArrayF)
 
         setIsFiltersLoaded(true)
@@ -198,11 +203,12 @@ const App = () => {
   }
 
   return (
-    <div className='ap'>
+    <div>
+      <Grid container fullWidth sx={{backgroundColor:'#e0e0e0',paddingBottom:"1000px"}}>
       <div>
           <div> 
-            <AppBar position="static">
-              <Toolbar sx={{fontSize: "25px"}}>
+            <AppBar position="static" sx={{backgroundColor:'#424242'}}>
+              <Toolbar sx={{fontSize: "28px", fontWeight:600}}>
                 Sinhala Song Search Engine         
               </Toolbar>
             </AppBar>
@@ -215,7 +221,10 @@ const App = () => {
                 <TextField id="outlined-basic" label="Search Here......." variant="outlined" fullWidth onChange={setQueryVal}/>
                 </Grid>
                 <Grid item>
-                <Button variant="contained" onClick={sendSearchSongRequest}>Search</Button>
+                <Button variant="contained" onClick={sendSearchSongRequest} endIcon={<SearchIcon />} sx={{backgroundColor:'#424242', ':hover': {
+      bgcolor: 'black', 
+      
+    }}}>Search</Button>
                 </Grid>
               </Grid>
 
@@ -224,13 +233,13 @@ const App = () => {
                 alignItems="center"
                 spacing={2}
                 sx={{marginTop: '20px'}}>
-                <Grid item>
+                <Grid item sx={{color:'black'}}>
                   Matching Fields: 
                 </Grid>
                 <Grid item>
                 <FormGroup>
                   <Grid container direction="row" justifyContent="center"
-                alignItems="center">
+                alignItems="center" sx={{color:'black'}}>
                     <Grid item>
                     <FormControlLabel control={<Checkbox checked= {matchAll} onChange={()=>changeMatchAll(matchAll)}/>} label="All Fields" />
                     </Grid>
@@ -240,9 +249,7 @@ const App = () => {
                     <Grid item>
                     <FormControlLabel control={<Checkbox  checked= {songName} disabled={disableMatchingFields} onChange={()=>setsongName(!songName)}/>} label="SongName" />
                     </Grid>
-                    <Grid item>
-                    <FormControlLabel control={<Checkbox checked= {year} disabled={disableMatchingFields} onChange={()=>setyear(!year)}/>} label="Year" />
-                    </Grid>
+                    
                     <Grid item>
                     <FormControlLabel control={<Checkbox checked= {album} disabled={disableMatchingFields} onChange={()=>setalbum(!album)}/>} label="Album" />
                     </Grid>
@@ -251,6 +258,12 @@ const App = () => {
                     </Grid>
                     <Grid item>
                     <FormControlLabel control={<Checkbox checked= {metaphor} disabled={disableMatchingFields} onChange={()=>setmetaphor(!metaphor)}/>} label="Metaphor" />
+                    </Grid>
+                    <Grid item>
+                    <FormControlLabel control={<Checkbox checked= {sourceDomain} disabled={disableMatchingFields} onChange={()=>setsourceDomain(!sourceDomain)}/>} label="Source Domain" />
+                    </Grid>
+                    <Grid item>
+                    <FormControlLabel control={<Checkbox checked= {targetDomain} disabled={disableMatchingFields} onChange={()=>settargetDomain(!targetDomain)}/>} label="Target" />
                     </Grid>
                   </Grid>
                   
@@ -267,8 +280,9 @@ const App = () => {
                   
                 </Grid>
                 
-                <Grid item xs={9} sx={{paddingLeft:'10%',paddingRight:'10%', }}>
-                  <div >Number of Hits: {documents.length}</div>
+                <Grid item xs={9} sx={{paddingLeft:'10%',paddingRight:'10%', color:'white'}}>
+                  <Grid sx={{color:'black', fontSize:'22px',fontWeight:400, marginBottom:'10px'}}><div>Number of Hits: {documents.length}</div></Grid>
+                  
                   <div>
                   {documents.map(function(document, i){
                             return <div>
@@ -285,7 +299,7 @@ const App = () => {
           <br></br>
         
       </div>
-
+      </Grid>
     </div>
   );
 };

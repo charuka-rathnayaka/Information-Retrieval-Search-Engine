@@ -36,7 +36,8 @@ for filename in files:
                 line_count+=1
 # for a in data_array:
 #     print(a[0],a[1])
-#     # print(a[5])
+#     print(a[4][0])
+
 print("number of songs",line_count)
 
 fieldNames = ['Song Name', 'Singer', 'Album', 'Year', 'Featured Artists', 'Lyrics', 'Metaphor', 'interpretation']

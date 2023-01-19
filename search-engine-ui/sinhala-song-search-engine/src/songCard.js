@@ -10,10 +10,10 @@ import { Grid } from '@mui/material';
 
 export default function SongCard(props) {
   return (
-    <Card sx={{ width: "100%", justifyContent: 'center' }}>
+    <Card sx={{ width: "100%", justifyContent: 'center', marginBottom:'15px', backgroundColor:'#757575', color:'#f3e5f5' }}>
       <CardContent>
-        <Typography  color="text.secondary" gutterBottom variant="h6">
-          Singer: {props.document._source.Singer}
+        <Typography   gutterBottom variant="h6">
+          Singer: {props.document._source.Singer.toString()}
         </Typography>
         <Typography variant="h5" component="div">
           Song Name: {props.document._source["Song Name"]}
@@ -32,6 +32,10 @@ export default function SongCard(props) {
             </Typography>
             </Grid>
         </Grid>
+
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Featured Artists: {props.document._source['Featured Artists'].toString()}
+            </Typography>
         
         
 
@@ -67,7 +71,7 @@ export default function SongCard(props) {
                 Lyrics
             </Grid>
             <Grid item xs={10}>
-                හදේ කොතැනක හෝ හිඳී ඔබ\nනිදා නොනිදා මෙන්\nබලා අවසර සොයා කල් දැන\nවෙලා හස රැහැනින්\nපෙළයි මා, මුදා සුව දැහැනින් //\n\nසයුර ඉම රත් සිතිජ රේඛාවේ\nමියෙන හිරු සේ ගිලී ගිම් අඳුරේ\nතලා මා සිත පලා ගිය ඔබ\nදවයි මා….හද, තනිවෙනා මොහොතින්\n\nහදේ කොතැනක...\n\nඋතුම් පිවිතුරු ප්‍රේමයේ නාමෙන්\nසහස් සුවහස් පැතුම් බල මහිමෙන්\nඉනූ කඳුලද සිඳෙන්නට පෙර\nයදින්නම්…. ඔබ, මැකී යනු මතකෙන්\n\nහදේ කොතැනක…
+            {props.document._source.Lyrics}
             </Grid>
         </Grid>
 

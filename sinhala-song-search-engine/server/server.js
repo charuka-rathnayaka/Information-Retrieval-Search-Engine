@@ -66,12 +66,18 @@ app.get('/results', (req, res) => {
                 shouldCount++;
         }
     }
+
+    must =[]
+    if(queryWithFilters.search == ""){
+        must = {"match_all": {}}
+    }
+
     const bool = {
-        "must": [], 
+        "must": must, 
         "filter": filter,
         "should": should,
         "must_not": []
-      };
+    };
   
     async function sendESRequest() {
         console.log("bool",JSON.stringify(bool))
