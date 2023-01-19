@@ -1,10 +1,110 @@
-
 {
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "stop"
+          ]
+        },
+        "english_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "englishNgramFilter"
+          ]
+        },
+        "sinhala_analyzer": {
+          "type": "custom",
+          "tokenizer": "icu_tokenizer",
+          "filter": [
+            "synonyms",
+            "stop",
+            "sinhalaNgramFilter"
+          ]
+        },
+        "synonym": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "synonyms"
+          ]
+        }
+      },
+      "filter": {
+        "englishNgramFilter": {
+          "type": "edge_ngram",
+          "min_gram": "4",
+          "max_gram": "18",
+          "side": "front"
+        },
+        "synonyms": {
+          "type": "synonym",
+          "synonyms_path": "synonym.txt"
+        },
+        "sinhalaNgramFilter": {
+          "type": "edge_ngram",
+          "min_gram": "2",
+          "max_gram": "18",
+          "side": "front"
+        },
+        "stop": {
+          "type": "stop",
+          "stopwords": [
+            "ගත්කරු",
+            "රචකයා",
+            "ලියන්නා",
+            "ලියන",
+            "රචිත",
+            "ලියපු",
+            "ලියව්‌ව",
+            "රචනා",
+            "රචක",
+            "ලියන්",
+            "ලිවූ",
+            "ගායකයා",
+            "ගයනවා",
+            "ගායනා",
+            "ගායනා",
+            "ගැයු",
+            "ගයන",
+            "කිව්",
+            "කිවු",
+            "සංගීත",
+            "සංගීතවත්",
+            "සංගීතය",
+            "වර්ගය",
+            "වර්‍ගයේ",
+            "වර්ගයේම",
+            "වර්ගයේ",
+            "වැනි",
+            "ඇතුලත්",
+            "ඇතුලු",
+            "විදියේ",
+            "විදිහේ",
+            "හොඳම",
+            "ජනප්‍රිය",
+            "ප්‍රචලිත",
+            "ප්‍රසිද්ධම",
+            "හොදම",
+            "ජනප්‍රියම",
+            "ලස්සනම",
+            "ගීත",
+            "සිංදු",
+            "ගී",
+            "සින්දු"
+          ]
+        }
+      }
+    }
+  },
   "mappings": {
     "properties": {
       "Song Name": {
         "type": "text",
-        "analyzer": "my_analyzer",
+        "analyzer": "sinhala_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword"
@@ -13,7 +113,7 @@
       },
       "Singer": {
         "type": "text",
-        "analyzer": "my_analyzer",
+        "analyzer": "sinhala_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword"
@@ -22,7 +122,7 @@
       },
       "Album": {
         "type": "text",
-        "analyzer": "my_analyzer",
+        "analyzer": "english_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword"
@@ -40,7 +140,7 @@
       },
       "Featured Artists": {
         "type": "text",
-        "analyzer": "my_analyzer",
+        "analyzer": "english_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword"
@@ -49,15 +149,23 @@
       },
       "Metaphor": {
         "type": "text",
-        "analyzer": "my_analyzer"
+        "analyzer": "sinhala_analyzer"
       },
       "interpretation": {
         "type": "text",
-        "analyzer": "my_analyzer"
+        "analyzer": "sinhala_analyzer"
+      },
+      "source domain": {
+        "type": "text",
+        "analyzer": "sinhala_analyzer"
+      },
+      "target domain": {
+        "type": "text",
+        "analyzer": "sinhala_analyzer"
       },
       "Lyrics": {
         "type": "text",
-        "analyzer": "my_analyzer",
+        "analyzer": "synonym",
         "fields": {
           "keyword": {
             "type": "keyword"
